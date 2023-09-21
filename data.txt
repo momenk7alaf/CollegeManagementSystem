@@ -1,0 +1,44 @@
+{
+Doctor  1234  Aliaa  122  Sep-10-2023-07:21:48  1
+C#        11566  4   joe      2221 Mid  30   16121   final 60 12221
+GO        17166  4   joe      2221 Mid  30   12711
+C++       13566  4   edoard   3221 Mid  30   12711
+Java      11566  4   joe      2221 Mid  30   16511 
+Cotlin    31563  4   jeffry   1116 Mid  30   12242
+#s
+C#	C++
+Java	C# 	C++
+Cotlin	Java	C#	GO
+#e
+#s
+momen   1432  C#   Mid      25	passed
+momen   1432 C#   final    30	passed
+momen   1432 GO   Mid    23	passed
+ali     1412  C#     Mid      22	passed
+nor     1431  C#     Mid      15	failed
+nor     1431  Java   Mid      10	failed
+#e
+}
+{
+Assistant 	2221  joe  122  Sep-10-2023-07:21:48
+1322	C#	 1234 	 	weak1C#		30
+1223	Go	 1234 	 	weak2Go		30
+1444	C#	 1234 	 	weak3C#		30
+1555	Java 1234 	 	weak4Java	30
+#s
+1322 C#   momen     1432      25	passed
+1223 Go   momen     1432      21	passed
+1322 C#   ali       1412      22	passed
+1444 C#   nor       1431      15	failed
+1555 Java nor       1431      10	failed
+#e
+}
+{
+Student  1432  momen  122  Sep-10-2023-07:21:48  1
+}
+{
+Student  1412  ali  122  Sep-10-2023-07:21:48  1
+}
+{
+Student  1431  nor  122  Sep-10-2023-07:21:48  1
+}
