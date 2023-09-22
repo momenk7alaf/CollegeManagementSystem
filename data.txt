@@ -11,6 +11,12 @@ Java	C# 	C++
 Cotlin	Java	C#	GO
 #e
 #s
+C# 1432 1412 1431
+GO 1432 
+Java 1431  
+Cotlin 1436 1432
+#e
+#s
 momen   1432  C#   Mid      25	passed
 momen   1432 C#   final    30	passed
 momen   1432 GO   Mid    23	passed
@@ -41,4 +47,7 @@ Student  1412  ali  122  Sep-10-2023-07:21:48  1
 }
 {
 Student  1431  nor  122  Sep-10-2023-07:21:48  1
+}
+{
+Student  1436  osama  122  Sep-10-2023-07:21:48  1
 }

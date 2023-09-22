@@ -54,7 +54,7 @@ public:
 	string get_Id() { return id; }
 	string get_Name() { return name; }
 };
-
+class Student;
 class Degree
 {
 public:
@@ -67,7 +67,6 @@ public:
 		return (this->degree) >= (other.degree);
 	}
 };
-
 class Doctor :public User {
 private:
 	class Exam
@@ -84,16 +83,19 @@ private:
 		short  CHoure;
 		string AssistName;
 		string AssistID;
+		set<string>RegStudent;//students ids
 		unordered_map<string, Exam>Exams;//ExamName => ExamObj
 		set<string>prereqForCors;//prerequisites for course
 		Course() { CHoure = 0; }
 	};
 	unordered_map<string, Course>Courses;//Course Name => Course Object
-	unordered_map<string, set<pair<string, string>>>Students;// Student id => {Course Name ,Exam Name}
+	unordered_map<string, set<pair<string, string>>>S_Degree;// Student id => {Course Name ,Exam Name}
+	unordered_map<string,  set<string>>S_Courses;// Student id => {Courses Name}
 public:
 	Doctor(string title, string name, string password, string id) :User(title, name, password, id) {}
 	Doctor() :User() {}
-	friend class Student;
+	//friend  class Student;
+	friend void Filter(Doctor doctor, Student &student);
 	string set_Courses(stringstream& index)
 	{
 		short houre;
@@ -128,8 +130,16 @@ public:
 			for (auto& j : i.second.Exams)
 			{
 				cout << j.second.examName << " " << j.second.exmamDegree << " " << j.second.examID << endl;
-				cout << "----------------------------------------------------\n\n";
+				for (auto& z : j.second.Dgrees)
+				{
+					cout << z.second.name << " " << z.second.degree << endl;
+				}
 			}
+			for (auto& j : i.second.RegStudent)
+			{
+				cout << j << " ";
+			}cout << endl;
+			cout << "----------------------------------------------------\n\n";
 		}
 	}
 	void set_pre(stringstream& in)
@@ -147,7 +157,17 @@ public:
 		string name, id, examname, cnm, status;
 		in >> name >> id >> cnm >> examname >> degree >> status;
 		Courses[cnm].Exams[examname].Dgrees[id] = (Degree(id, name, degree, status));
-		Students[id].insert({ cnm,examname });
+		S_Degree[id].insert({ cnm,examname });
+	}
+	void set_Registers(stringstream &in)
+	{
+		string coursNm,tmpids;
+		in >> coursNm;
+		while (in >> tmpids)
+		{
+			this->Courses[coursNm].RegStudent.insert(tmpids);
+			this->S_Courses[tmpids].insert(coursNm);
+		}
 	}
 	void delete_course()
 	{
@@ -213,7 +233,6 @@ public:
 			UPLOAD METHOD HERE !!
 		*/
 	}
-
 };
 
 class Assistant : public User
@@ -297,6 +316,8 @@ private:
 	public:
 		string CourseName, Book, DoctorID, DoctorName, AssistName, AssistID;
 		short Chour;
+		ReCourse(string CourseName, string Book,string DoctorID,string DoctorName,string AssistName,string AssistID, short Chour):
+			CourseName(CourseName), Book(Book), DoctorID(DoctorID), DoctorName(DoctorName), AssistName(AssistName), AssistID(AssistID),Chour(Chour) {}
 		ReCourse() { Chour = 0; }
 		set<Exam>Exmas;
 		set<Assignment>Assignments;
@@ -308,50 +329,45 @@ private:
 public:
 	Student(string title, string name, string password, string id) :User(title, name, password, id) {}
 	Student() :User() {}
-	void Filter(Doctor Doctr)
+	friend void Filter(Doctor doctor, Student &student);
+	void Filter(Assistant assistant)
 	{
-		for (auto& i : Doctr.Students[this->get_Id()])
-		{
-			//set couses data
-			this->Courses[i.first].CourseName = i.first;
-			this->Courses[i.first].Book = Doctr.Courses[i.first].ID;
-			this->Courses[i.first].AssistName = Doctr.Courses[i.first].AssistName;
-			this->Courses[i.first].AssistID = Doctr.Courses[i.first].AssistID;
-			this->Courses[i.first].DoctorName = Doctr.get_Name(); 
-			this->Courses[i.first].DoctorID = Doctr.get_Id();
-			this->Courses[i.first].Chour = Doctr.Courses[i.first].CHoure;
-			//cout << i.first << " " << Doctr.Courses[i.first].ID << " " << Doctr.get_Name() << " " << Doctr.get_Id() << endl;
-			//set exams data
-			string examName = Doctr.Courses[i.first].Exams[i.second].examName;
-			string examID = Doctr.Courses[i.first].Exams[i.second].examID;
-			short exmamDegree = Doctr.Courses[i.first].Exams[i.second].exmamDegree;
-			short DgreOfExam = Doctr.Courses[i.first].Exams[i.second].Dgrees[this->get_Id()].degree;
-			this->Courses[i.first].Exmas.insert(Exam(examName, examID, exmamDegree, DgreOfExam));
-
-		}
-	}
-	void Filter(Assistant &assist)
-	{
-		for (auto& i : assist.Student_[this->get_Id()])
-		{
-			string cours = assist.Assigment[i].CourseName;
-			string assName = assist.Assigment[i].AssignmentName;
-			string assID = assist.Assigment[i].AssignmentID;
-			short assDegree = assist.Assigment[i].AssignmentDegree;
-			short DgreOfAss = assist.Assigment[i].degrees[this->get_Id()].degree;
-			Courses[cours].Assignments.insert(Assignment(assName, assID, assDegree, DgreOfAss));
-		}
+		
 	}
 	void get_Data()
 	{
-		this->data();
 		for (auto& i : this->Courses)
 		{
-			cout << i.second.DoctorName << endl;
+			cout << i.first << " " << i.second.DoctorName<<" "<<i.second.AssistName << endl;
+			for (auto& j : i.second.Exmas)
+			{
+				 cout << this->get_Name() << " " << j.examName << " " << j.exmamDegree << " " << j.DgreOfExam << endl;
+			}
 		}
-		cout << "__________________________________________\n";
+		cout << "************************************************\n";
 	}
 };
+void Filter(Doctor doctor,Student &student)
+{
+	for (auto& i : doctor.S_Courses[student.get_Id()])
+	{
+		student.Courses[i].CourseName = i;
+		student.Courses[i].Book = doctor.Courses[i].ID;
+		student.Courses[i].DoctorID = doctor.get_Id();
+		student.Courses[i].DoctorName = doctor.get_Name();
+		student.Courses[i].AssistName = doctor.Courses[i].AssistName;
+		student.Courses[i].AssistID = doctor.Courses[i].AssistID;
+		student.Courses[i].Chour = doctor.Courses[i].CHoure;
+	}
+	for (auto& i : doctor.S_Degree[student.get_Id()])//Student id => {Course Name ,Exam Name}
+	{
+		string examName = i.second;
+		string examID = doctor.Courses[i.first].Exams[examName].examID;
+		short exmamDegree = doctor.Courses[i.first].Exams[examName].exmamDegree;
+		short DgreOfExam = doctor.Courses[i.first].Exams[examName].Dgrees[student.get_Id()].degree;
+		student.Courses[i.first].Exmas.insert(Student::Exam(examName, examID, exmamDegree, DgreOfExam));
+	}
+}
 void Read(unordered_map<string, Doctor>& Doctors, unordered_map<string, Assistant>& Assistants, unordered_map<string, Student>& Students)
 {
 	fstream index{ "data.txt" , ios::in };
@@ -382,6 +398,14 @@ void Read(unordered_map<string, Doctor>& Doctors, unordered_map<string, Assistan
 					if ((int)input.find("#e") != -1) { break; }
 					stringstream in{ input };
 					Doctors[id].set_pre(in);
+				}
+				// Get Registered Students
+				while (getline(index, input))
+				{
+					if ((int)input.find("//") != -1 || (int)input.find("#s") != -1) { continue; }
+					if ((int)input.find("#e") != -1) { break; }
+					stringstream in{ input };
+					Doctors[id].set_Registers(in);
 				}
 				//Get Students Data
 				while (getline(index, input))
@@ -423,7 +447,7 @@ void Read(unordered_map<string, Doctor>& Doctors, unordered_map<string, Assistan
 		{
 			for (auto& j : Doctors)
 			{
-				i.second.Filter(j.second);
+				Filter(j.second, i.second);
 			}
 		}
 		//Read data from Assistants
@@ -450,5 +474,5 @@ int main(int argc, char* argv[])
 	{
 		i.second.get_Data();
 	}
-	Doctors["1234"].get_Data();
+	//Doctors["1234"].get_Data();
 }
