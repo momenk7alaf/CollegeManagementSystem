@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\el motaheda\source\repos\Application1\x64\Debug\Application1.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\el motaheda\source\repos\Application1\database\data.txt</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\el motaheda\source\repos\Application1\database\messages.txt</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

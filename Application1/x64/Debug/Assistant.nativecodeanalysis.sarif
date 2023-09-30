@@ -1,0 +1,83 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.37.32824.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/assistant.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "c14c93b8058ee5ee676a7936497891b4fc58ead6336f8a70776cdce458dc3cea"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/assistant.h"
+          },
+          "hashes": {
+            "sha-256": "1e491d8056b70c8b631d38ae4b293281f68bc20ca6f47aeedf4c18032dff1edf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/main.h"
+          },
+          "hashes": {
+            "sha-256": "51c38535cfece9caa4cb69843237632f2c8e33184c4969df1dcdc6cc8d13013f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/user.h"
+          },
+          "hashes": {
+            "sha-256": "0bd9cabbaf9b1cce7eea7e4972a667237f279464ceea7c64b454df5329525223"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/messages.h"
+          },
+          "hashes": {
+            "sha-256": "bbc4723178edd12cbf531e43bd2831bbaa138a418479c4d4388f0ea4f58bcad6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/doctor.h"
+          },
+          "hashes": {
+            "sha-256": "9f4b89a7639c11108f9d3d561084a6b0f57ef0156d71370a3118935c5b984cb8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/el motaheda/source/repos/application1/student.h"
+          },
+          "hashes": {
+            "sha-256": "365e1e6de5f522a36f9470c25b9a9213636e04f892658fec1db48f3b7f3efa4f"
+          }
+        }
+      ]
+    }
+  ]
+}
